@@ -159,7 +159,7 @@
 
     <!-- Secțiune pentru numărul de persoane -->
     <div id="guests-section" class="form-group hidden">
-        <label for="num-adults">Numărul persoanelor care vor fi prezente la eveniment:</label>
+        <label for="num-adults">Numărul persoanelor (adulți) care vor fi prezente la eveniment:</label>
         <input type="number" class="form-control-number" id="num-adults" name="num-adults">
     </div>
 
@@ -183,7 +183,22 @@
         <label for="num-children">Numărul de copii care vor fi prezenți:</label>
         <input type="number" class="form-control-number" id="num-children">
     </div>
+
+    <!-- Secțiune pentru întrebarea despre meniul sau scaunul copiilor -->
+    <div id="children-menu-section" class="form-group hidden">
+        <label>Copilul tău are/Copiii tău au nevoie de meniu sau doar de scaun?</label><br>
+        <div class="radio-container">
+            <div class="form-check">
+                <input type="radio" id="menu-option" name="children-menu" value="menu">
+                <label for="menu-option">Meniu</label><br>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="chair-option" name="children-menu" value="chair">
+                <label for="chair-option">Doar scaun</label>
+            </div>
+        </div>
     </div>
+</div>
 
     <!-- Câmpul pentru mesajul personalizat -->
     <label for="custom-message">Transmite-ne un mesaj:</label>
@@ -235,7 +250,7 @@
     <script src="confirmation.js"></script>
     <script src="conf-message.js"></script>
     <script>
-        $('#rsvp-form').on('submit', function(event) {
+       $('#rsvp-form').on('submit', function(event) {
     event.preventDefault();
 
     const formData = {
@@ -247,6 +262,7 @@
         children: $('input[name="children"]:checked').val() === 'yes',
         num_adults: $('#num-adults').val() || 0,
         num_children: $('#num-children').val() || 0,
+        children_menu: $('input[name="children-menu"]:checked').val() || 'N/A',
         custom_message: $('#custom-message').val()
     };
 
@@ -260,6 +276,7 @@
         Însoțitori: ${formData.companions ? 'DA' : 'NU'}
         Număr adulți: ${formData.num_adults}
         Copii: ${formData.children ? `DA (${formData.num_children} copii)` : 'NU'}
+        Meniu pentru copii: ${formData.children_menu === 'menu' ? 'Meniu' : formData.children_menu === 'chair' ? 'Doar scaun' : 'N/A'}
         Mesaj personalizat: ${formData.custom_message || 'N/A'}
     `;
 
