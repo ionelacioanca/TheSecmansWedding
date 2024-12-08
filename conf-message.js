@@ -48,6 +48,7 @@ document.getElementById('invitationForm').addEventListener('submit', (event) => 
   const children = formData.get('children') ? 'DA' : 'NU';
   const numAdults = parseInt(formData.get('num_adults'), 10) || 0;
   const numChildren = parseInt(formData.get('num_children'), 10) || 0;
+  const childrenMenu = formData.get('children-menu') === 'menu' ? 'Meniu' : formData.get('children-menu') === 'chair' ? 'Doar scaun' : 'N/A';
   const customMessage = formData.get('custom_message') || '';
 
   const totalGuests = companions === 'DA' ? numAdults + numChildren : 0;
@@ -64,6 +65,7 @@ document.getElementById('invitationForm').addEventListener('submit', (event) => 
     Număr total persoane: ${totalGuests}
     Număr adulți: ${numAdults}
     Număr copii: ${numChildren}
+    Preferințe copii: ${childrenMenu}
     Mesaj personalizat: ${customMessage}
   `;
 
