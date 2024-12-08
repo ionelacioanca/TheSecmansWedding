@@ -4,17 +4,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const additionalQuestions = document.getElementById('additional-questions');
     const accommodationSection = document.getElementById('accommodation-section');
     const companionsSection = document.getElementById('companions-section');
-    const childrenSection = document.getElementById('children-section');
     const guestsSection = document.getElementById('guests-section');
+    const childrenSection = document.getElementById('children-section');
     const childrenNumberSection = document.getElementById('children-number-section');
+    const childrenMenuSection = document.getElementById('children-menu-section');
 
     // Inițial, ascunde secțiunile suplimentare
     additionalQuestions.style.display = 'none';
     accommodationSection.style.display = 'none';
     companionsSection.style.display = 'none';
-    childrenSection.style.display = 'none';
     guestsSection.style.display = 'none';
+    childrenSection.style.display = 'none';
     childrenNumberSection.style.display = 'none';
+    childrenMenuSection.style.display = 'none';
 
     // Ascunde toate secțiunile suplimentare atunci când se selectează 'NU' la participare
     attendingNo.addEventListener('change', function () {
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             childrenSection.style.display = 'none';
             guestsSection.style.display = 'none';
             childrenNumberSection.style.display = 'none';
+            childrenMenuSection.style.display = 'none';
         }
     });
 
@@ -36,11 +39,23 @@ document.addEventListener('DOMContentLoaded', function () {
             companionsSection.style.display = 'block';
             childrenSection.style.display = 'block';
             guestsSection.style.display = 'block';
-            childrenNumberSection.style.display = 'block';
         }
     });
 
-    // Afișează secțiunile corespunzătoare în funcție de răspunsul la întrebarea despre însoțitori
+    // Afișează secțiunea de număr copii și meniuri dacă se selectează 'DA' la întrebarea despre copii
+    document.querySelectorAll('input[name="children"]').forEach(function (elem) {
+        elem.addEventListener('change', function () {
+            if (this.value === 'yes') {
+                childrenNumberSection.style.display = 'block';
+                childrenMenuSection.style.display = 'block';
+            } else {
+                childrenNumberSection.style.display = 'none';
+                childrenMenuSection.style.display = 'none';
+            }
+        });
+    });
+
+    // Afișează secțiunea corespunzătoare în funcție de răspunsul la întrebarea despre însoțitori
     document.querySelectorAll('input[name="companions"]').forEach(function (elem) {
         elem.addEventListener('change', function () {
             if (this.value === 'yes') {
@@ -49,20 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 guestsSection.style.display = 'none';
                 childrenNumberSection.style.display = 'none';
+                childrenMenuSection.style.display = 'none';
                 childrenSection.style.display = 'none';
-            }
-        });
-    });
-
-    // Afișează secțiunea de număr copii dacă se selectează 'DA' la întrebarea despre copii
-    document.querySelectorAll('input[name="children"]').forEach(function (elem) {
-        elem.addEventListener('change', function () {
-            if (this.value === 'yes') {
-                childrenNumberSection.style.display = 'block';
-                guestsSection.style.display = 'block'; // Dacă copiii sunt aduși, afișăm și numărul de participanți
-            } else {
-                childrenNumberSection.style.display = 'none';
-                guestsSection.style.display = 'block'; // Dacă nu sunt copii, afișăm doar numărul de participanți
             }
         });
     });
